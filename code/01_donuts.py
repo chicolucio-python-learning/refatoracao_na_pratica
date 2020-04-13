@@ -10,10 +10,10 @@ e donuts(23) retorna 'Number of donuts: many'
 
 
 def donuts(count):
-    if count < 10:
-        message = 'Number of donuts: ' + str(count)
-    else:
+    if count >= 10:  # mais proximidade ao enunciado. Domínio do problema
         message = 'Number of donuts: many'
+    else:
+        message = 'Number of donuts: ' + str(count)
     return message
 
 
