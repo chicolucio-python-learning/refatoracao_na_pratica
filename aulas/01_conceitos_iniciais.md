@@ -11,8 +11,8 @@
 - ~~Qualidade?~~ **Economia**
   - Cuidado com a armadilha da estética do código
 - Melhoria no desempenho da equipe. Código mais fácil de mudar e evoluir com a necessidade do negócio.
-- é um antídoto contra o envelhecimento do código
-  - Identificação de *code smell*
+- É um antídoto contra o envelhecimento do código:
+  - identificação de *code smell*
   - recrutamento de *design patterns*
   - aplicação da refatoração
 -refatoração deve sempre ser feita em código estável, que passa em testes.
@@ -46,7 +46,7 @@
 
 Com um design ruim no começo, por não ter resistência, se entrega funcionalidades rapidamente, dando uma sensação de produtividade. No entanto, com o crescimento do projeto, se leva cada vez mais tempo para entregar resultados e pode levar ao travamento do projeto.
 
-Com um design bom, o começo é mais lento, mas com o tempo o ritmo se mostra mais consistência, levando a uma maior confiança da equipe e dos clientes.
+Com um design bom, o começo é mais lento, mas com o tempo o ritmo se mostra mais consistente, levando a uma maior confiança da equipe e dos clientes.
 
 Gráfico complementar:
 
