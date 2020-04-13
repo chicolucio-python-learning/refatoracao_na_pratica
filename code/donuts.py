@@ -10,7 +10,7 @@ e donuts(23) retorna 'Number of donuts: many'
 
 
 def donuts(count):
-    return 'Number of donuts: ' + str(Quantity(count))
+    return f'Number of donuts: {Quantity(count)}'
 
 
 class Quantity:
@@ -18,10 +18,9 @@ class Quantity:
         self.count = count
         self.limit = limit
 
-    def __str__(self):
-        if self.count >= self.limit:
-            qty = 'many'
-        else:
-            qty = str(self.count)
+    @property  # permite usar um método como se fosse um atributo
+    def many(self):
+        return self.count >= self.limit
 
-        return qty
+    def __str__(self):
+        return 'many' if self.many else str(self.count)
