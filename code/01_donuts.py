@@ -9,8 +9,8 @@ e donuts(23) retorna 'Number of donuts: many'
 """
 
 
-def donuts(count):
-    if count >= 10:  # mais proximidade ao enunciado. Domínio do problema
+def donuts(count, limit=10):  # valor default, fácil de alterar
+    if count >= limit:  # mais proximidade ao enunciado. Domínio do problema
         qty = 'many'  # qty -> quantity, quantidade
     else:
         qty = str(count)
