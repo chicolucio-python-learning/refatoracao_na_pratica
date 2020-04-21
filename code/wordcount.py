@@ -38,28 +38,27 @@ import sys
 FILE = "./letras.txt"
 
 
-def dict_wordcount(filename):
+def wordcount_dict(filename):
     with open(filename) as file:
         file_content = file.read()
     words = file_content.lower().split()
     words_dict = {}
 
-    for word in words:
-        if word in words_dict:
-            words_dict[word] = words_dict[word] + 1
-        else:
-            words_dict[word] = 1
+    for w in words:
+        if w not in words_dict:
+            words_dict[w] = 0
+        words_dict[w] += 1
     return words_dict
 
 
 def print_words(filename):
-    d = dict_wordcount(filename)
+    d = wordcount_dict(filename)
     for key, value in sorted(d.items()):
         print(key, value)
 
 
 def print_top(filename):
-    d = dict_wordcount(filename)
+    d = wordcount_dict(filename)
     for key, value in sorted(d.items(), key=lambda item: item[1], reverse=True):
         print(key, value)
 

@@ -1,6 +1,7 @@
-from wordcount import dict_wordcount, print_words, print_top
+from wordcount import wordcount_dict, print_words, print_top, main
+import sys
 
-
+# setup
 FILE = "code/letras.txt"
 FILE_EXP_PRINT_WORDS = "code/tests/expected_print_words.txt"
 FILE_EXP_PRINT_TOP = "code/tests/expected_print_top.txt"
@@ -14,8 +15,11 @@ with open(FILE_EXP_PRINT_TOP) as file:
 d = {'a': 2, 'b': 4, 'c': 3}
 
 
+# testes funções
+
+
 def test_dict_wordcount():
-    assert dict_wordcount(FILE) == d
+    assert wordcount_dict(FILE) == d
 
 
 def test_print_words(capsys):
@@ -28,3 +32,21 @@ def test_print_top(capsys):
     print_top(FILE)
     out, _ = capsys.readouterr()
     assert out == out_print_top
+
+
+# testes CLI
+
+
+def run(mode, capsys, monkeypatch):
+    monkeypatch.setattr(sys, 'argv', ['wordcount.py', mode, FILE])
+    main()
+    out, _ = capsys.readouterr()
+    return out
+
+
+def test_count(capsys, monkeypatch):
+    assert run('--count', capsys, monkeypatch) == out_print_words
+
+
+def test_topcount(capsys, monkeypatch):
+    assert run('--topcount', capsys, monkeypatch) == out_print_top
