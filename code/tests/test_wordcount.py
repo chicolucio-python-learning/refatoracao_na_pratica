@@ -1,4 +1,4 @@
-from wordcount import wordcount_dict, print_words, print_top, main
+from wordcount import main
 import sys
 
 # setup
@@ -13,24 +13,6 @@ with open(FILE_EXP_PRINT_TOP) as file:
     out_print_top = file.read()
 
 d = {'a': 2, 'b': 4, 'c': 3}
-
-
-# testes funções
-
-
-def test_dict_wordcount():
-    assert wordcount_dict(FILE) == d.items()
-
-
-def test_print_words(capsys):
-    assert print_words(FILE) == 'a 2\nb 4\nc 3'
-
-
-def test_print_top(capsys):
-    assert print_top(FILE) == 'b 4\nc 3\na 2'
-
-
-# testes CLI
 
 
 def run(mode, capsys, monkeypatch):
