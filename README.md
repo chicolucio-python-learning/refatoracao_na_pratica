@@ -9,3 +9,11 @@ Anotações: [Conceitos iniciais](aulas/01_conceitos_iniciais.md) &emsp;&emsp; [
 Código: [donuts](code/donuts.py) &emsp; [testes](code/tests/test_donuts.py)
 
 A evolução do código e dos testes pode ser verificada no histórico de commits.
+
+## Segundo módulo
+
+Anotações: [Dimensões dos componentes](aulas/03_dimensoes_componentes.md)
+
+Código: [wordcount](code/wordcount.py) &emsp; [testes](code/tests/test_wordcount.py)
+
+A evolução do código e dos testes pode ser verificada no histórico de commits.
