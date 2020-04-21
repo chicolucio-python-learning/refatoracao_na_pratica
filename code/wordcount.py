@@ -48,20 +48,28 @@ def wordcount_dict(filename):
         if w not in words_dict:
             words_dict[w] = 0
         words_dict[w] += 1
-    return words_dict
+    return words_dict.items()
 
 
 def print_words(filename):
-    d = wordcount_dict(filename)
-    for key, value in sorted(d.items()):
-        print(key, value)
+    word_count = wordcount_dict(filename)
+    word_count = sorted(word_count)
+    l = []
+    for key, value in word_count:
+        l.append(f'{key} {value}')
+    out = '\n'.join(l)
+    return out
 
 
 def print_top(filename):
-    d = wordcount_dict(filename)
-    for key, value in sorted(d.items(), key=lambda item: item[1], reverse=True):
-        print(key, value)
-
+    word_count = wordcount_dict(filename)
+    word_count = sorted(word_count,
+                        key=lambda item: item[-1], reverse=True)[:20]
+    l = []
+    for key, value in word_count:
+        l.append(f'{key} {value}')
+    out = '\n'.join(l)
+    return out
 
 # A função abaixo chama print_words() ou print_top() de acordo com os
 # parâmetros do programa.
@@ -75,9 +83,9 @@ def main():
     option = sys.argv[1]
     filename = sys.argv[2]
     if option == '--count':
-        print_words(filename)
+        print(print_words(filename))
     elif option == '--topcount':
-        print_top(filename)
+        print(print_top(filename))
     else:
         print('unknown option: ' + option)
         sys.exit(1)

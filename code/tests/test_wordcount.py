@@ -19,19 +19,15 @@ d = {'a': 2, 'b': 4, 'c': 3}
 
 
 def test_dict_wordcount():
-    assert wordcount_dict(FILE) == d
+    assert wordcount_dict(FILE) == d.items()
 
 
 def test_print_words(capsys):
-    print_words(FILE)
-    out, _ = capsys.readouterr()
-    assert out == out_print_words
+    assert print_words(FILE) == 'a 2\nb 4\nc 3'
 
 
 def test_print_top(capsys):
-    print_top(FILE)
-    out, _ = capsys.readouterr()
-    assert out == out_print_top
+    assert print_top(FILE) == 'b 4\nc 3\na 2'
 
 
 # testes CLI
