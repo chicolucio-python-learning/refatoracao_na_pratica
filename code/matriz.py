@@ -46,16 +46,10 @@ def color_pixel(cmd, board):
 
 def ver_pixel(cmd, board):
     """Change the color of a column - 'V' Command."""
-    # TODO: Renomear ver_pixel para algo como vertical_line.
-    # TODO: Expandir cmd em parâmetros que devem ser recebidos já nos tipos corretos.
-    # TODO: Manter as variáveis alinhadas com o range. lineIni -> start e lineEnd -> stop
-    # TODO: C é um nome ruim.
-    col, lineIni, lineEnd, C = cmd
+    col, row_start, row_end, color = int(cmd[0]), int(cmd[1]), int(cmd[2]), cmd[3]
 
-    # TODO: Renomear ver para line ou algo assim.
-    # TODO: Computar as coordenadas e passá-las para algum método do board que atribui valor a múltiplas coordenadas.
-    for ver in range(int(lineIni) - 1, int(lineEnd)):
-        board[int(ver)][int(col) - 1] = C
+    for row in range(row_start, row_end + 1):
+        set_item(board, (col, row), color)
     return board
 
 
