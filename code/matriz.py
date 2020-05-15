@@ -7,6 +7,8 @@
 #       validar o comando em si.
 # TODO: Verificar se faz sentido ter um parser único para o comando validado, eliminando List[str] e usando algo
 #       de mais alto nível.
+
+
 def read_sequence():  # Read and validate a sequence of commands.
     # TODO: Melhorar o nome charValid para algo mais semântico.
     # TODO: Remover os parêntesis desnecessários.
@@ -29,10 +31,18 @@ def read_sequence():  # Read and validate a sequence of commands.
 # TODO: Extrair o print do print_board.
 # TODO: print_board deveria ser "board_como_string" e caso o board for uma instância de uma classe nossa, implementar o
 #       __str__.
+
+
+def string(board):
+    l = []
+    for row in board:
+        l.append(''.join(row))
+    return '\n'.join(l)
+
+
 def print_board(board):  # Print the Board.
     print("\n")
-    for row in board:
-        print("".join(row))
+    print(string(board))
     print("\n")
 
 # TODO: Mover o comentário para um docstring.
@@ -40,6 +50,8 @@ def print_board(board):  # Print the Board.
 # TODO: Mudar "col" e "line" para "width" e "height".
 # TODO: Idealmente width e height já deveriam chegar como int.
 # TODO: Mudar o nome create_array para algo ligado ao board.
+
+
 def create_array(cmd):  # Create a array - 'I' Command.
     board = []
     col, line = cmd
@@ -67,6 +79,8 @@ def clean_array(board):  # Clean a array - 'C' Command.
 # TODO: Verificar se faz sentido implementar um objeto Coordenada/Cell/etc que encapsule a conversão de índices dos
 #       comandos em índices do board: board[Coord(1, 2)] = color -> __set_item__
 # TODO: Renomear colos_pixel para color.
+
+
 def color_pixel(cmd, board):  # Change the color of one pixel - 'L' Command.
     col, line, color = cmd
 
@@ -76,6 +90,8 @@ def color_pixel(cmd, board):  # Change the color of one pixel - 'L' Command.
 # TODO: Mover comentário para docstring.
 # TODO: Renomear ver_pixel para algo como vertical_line.
 # TODO: Expandir cmd em parâmetros que devem ser recebidos já nos tipos corretos.
+
+
 def ver_pixel(cmd, board):  # Change the color of a column - 'V' Command.
     # TODO: Manter as variáveis alinhadas com o range. lineIni -> start e lineEnd -> stop
     # TODO: C é um nome ruim.
@@ -91,6 +107,8 @@ def ver_pixel(cmd, board):  # Change the color of a column - 'V' Command.
 # TODO: Renomear hor_pixel para algo como horizontal_line
 # TODO: Expandir cmd em parâmetros que devem ser recebidos já nos tipos corretos.
 # TODO: Verificar se é possível uniformizar a assinatura de ver_pixel e hor_pixel.
+
+
 def hor_pixel(cmd, board):  # Change the color of a line - 'H' Command.
     # TODO: Manter as variáveis alinhadas com o range. colIni -> start e colEnd -> stop
     colIni, colEnd, line, color = cmd
