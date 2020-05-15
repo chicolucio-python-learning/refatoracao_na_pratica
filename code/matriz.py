@@ -139,17 +139,10 @@ def fill_pixel(cmd, board):
     return board
 
 
-def save_array(name, board):
+def save_array(filename, board):
     """Save the array with the 'S' command."""
-    # TODO: Melhorar o nome save_array.
-    # TODO: Melhorar o nome do parâmetro name.
-    # TODO: Utilizar a mesma lógica do "board as string" para persistir no arquivo texto.
-
-    # TODO: remover o lower.
-    # TODO: melhorar o my_file para f.
-    with open(name.lower(), "w") as my_file:
-        for item in board:
-            my_file.write("".join(item) + "\n")
+    with open(filename, "w") as f:
+        f.write("".join(string(board)))
 
 
 def read_sequence():
