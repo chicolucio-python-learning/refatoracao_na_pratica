@@ -37,17 +37,6 @@ def clean_array(board, value=BLANK):
     return board
 
 
-def string(board):
-    return '\n'.join((''.join(row) for row in board))
-
-
-def print_board(board):
-    """Print the Board."""
-    print("\n")
-    print(string(board))
-    print("\n")
-
-
 def color_pixel(cmd, board):
     # TODO: Expandir o cmd em parâmetros.
     # TODO: Receber os parâmetros já no tipo correto.
@@ -202,6 +191,17 @@ def read_sequence():
         print("\nComando Inválido!\n")
         return sqc
     # TODO: Implementar um único return.
+
+
+def string(board):
+    return '\n'.join((''.join(row) for row in board))
+
+
+def print_board(board):
+    """Print the Board."""
+    print("\n")
+    print(string(board))
+    print("\n")
 
 
 def main():
