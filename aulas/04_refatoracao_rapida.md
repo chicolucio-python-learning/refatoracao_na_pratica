@@ -1,0 +1,29 @@
+# Refatoração rápida
+
+- Refatoração rápida não significa ser rápido - desenvolver software é demorado -, mas progredir rapidamente.
+- Atualmente os RH estão pedindo indicações ao invés de enviar links de vagas.
+- Há poucas vagas boas para iniciantes.
+- Monte seu currículo mostrando resultados e não listando tecnologias. Como se criou valor com os projetos que se desenvolveu.
+- GitHub por si só não importa. Importa a história e os projetos relacionados ao que se colocou no GitHub.
+- Seja antifrágil. A tecnologia pode mudar, crises podem vir, mas se mantenha firme por ter se precavido, preparado e organizado. Aprenda o que for necessário rapidamente.
+- Conheça sua forma de aprender, a que mais se adequa a você.
+- Planejar, fazer, entender o que fez e fazer melhor.
+- Estude a base das coisas, solidifique seus pilares.
+- Se responsabilize 100 % pelo processo.
+- Refatoração é crucial pois permite visualizar o que antes estava invisível.
+- Código no editor é uma foto; código rodando é um filme.
+- **Fluxo** é mais importante que estrutura.
+  - *Código*: comandos e sintaxe
+  - *Lógica*: relação entre os comandos e os caminhos possíveis
+  - *Etapas*: passos da solução do problema
+  - *Fluxo*: relação entre os tópicos anteriores; enxergar o filme de antemão
+- Interação x Impacto x Isolamento
+- Complexidade ciclomática
+  - interfaces
+    - grafo de classes, métodos e funções
+      - como se relacionam umas com as outras
+      - quanto mais arestas no grafo, mais complexo
+  - considerar também as variáveis e os objetos, evolução e mutação do runtime na memória
+    - análise de risco
+  - refatoração -> análise de formas diferentes de se fazer a mesma coisa, diminuindo complexidade e impacto, melhorando interação.
+- Software como organismo vivo
