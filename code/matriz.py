@@ -55,17 +55,10 @@ def ver_pixel(cmd, board):
 
 def hor_pixel(cmd, board):
     """Change the color of a line - 'H' Command."""
-    # TODO: Mover comentário para docstring.
-    # TODO: Renomear hor_pixel para algo como horizontal_line
-    # TODO: Expandir cmd em parâmetros que devem ser recebidos já nos tipos corretos.
-    # TODO: Verificar se é possível uniformizar a assinatura de ver_pixel e hor_pixel.
-    # TODO: Manter as variáveis alinhadas com o range. colIni -> start e colEnd -> stop
-    colIni, colEnd, line, color = cmd
+    col_start, col_end, row, color = int(cmd[0]), int(cmd[1]), int(cmd[2]), cmd[3]
 
-    # TODO: Renomear hor para col ou algo assim.
-    # TODO: Computar as coordenadas e passá-las para algum método do board que atribui valor a múltiplas coordenadas.
-    for hor in range(int(colIni) - 1, int(colEnd)):
-        board[int(line) - 1][int(hor)] = color
+    for col in range(col_start, col_end + 1):
+        set_item(board, (col, row), color)
     return board
 
 
