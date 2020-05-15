@@ -1,5 +1,7 @@
 # -*- coding: utf8 -*-
 
+BLANK = "O"
+
 # TODO: Mover o read_sequence para próximo do main.
 # TODO: Mover o comentário para uma docstring
 # TODO: Melhorar o nome read_sequence, pois na verdade ela lê o comando.
@@ -49,15 +51,10 @@ def print_board(board):  # Print the Board.
 # TODO: Mudar o nome create_array para algo ligado ao board.
 
 
-def create_array(cmd):  # Create a array - 'I' Command.
-    board = []
-    col, line = cmd
-
-    # TODO: Renomear x para algo mais semântico.
-    # TODO: Trocar o for por uma listcomp.
-    for x in range(int(line)):
-        board.append(["O"] * int(col))
-    return board
+def create_array(cmd, value=BLANK):
+    """Create a array - 'I' Command."""
+    col, row = int(cmd[0]), int(cmd[1])  # TODO
+    return [[value] * col for _ in range(row)]
 
 
 # TODO: Mover o comentário para docstring.
