@@ -34,10 +34,7 @@ def read_sequence():  # Read and validate a sequence of commands.
 
 
 def string(board):
-    l = []
-    for row in board:
-        l.append(''.join(row))
-    return '\n'.join(l)
+    return '\n'.join((''.join(row) for row in board))
 
 
 def print_board(board):  # Print the Board.
