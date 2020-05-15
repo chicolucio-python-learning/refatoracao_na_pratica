@@ -3,10 +3,38 @@
 BLANK = "O"
 
 
+def width(board):
+    return len(board[0])
+
+
+def height(board):
+    return len(board)
+
+
+def x(coord):
+    return coord[0]
+
+
+def y(coord):
+    return coord[1]
+
+
+def set_item(board, coord, value):
+    board[y(coord)][x(coord)] = value
+
+
 def create_array(cmd, value=BLANK):
     """Create a array - 'I' Command."""
     col, row = int(cmd[0]), int(cmd[1])  # TODO
     return [[value] * col for _ in range(row)]
+
+
+def clean_array(board, value=BLANK):
+    """Clean a array - 'C' Command."""
+    for row in range(height(board)):
+        for col in range(width(board)):
+            set_item(board, (col, row), value)
+    return board
 
 
 def string(board):
@@ -18,17 +46,6 @@ def print_board(board):
     print("\n")
     print(string(board))
     print("\n")
-
-
-def clean_array(board):
-    # TODO: Renomar clean_array para algo melhor.
-    """Clean a array - 'C' Command."""
-    # TODO: Extrair len(board) e len(board[line]) para variáveis.
-    # TODO: Remover o "0" do range.
-    for line in range(0, len(board)):
-        for col in range(0, len(board[line])):
-            board[line][col] = "O"
-    return board
 
 
 def color_pixel(cmd, board):
