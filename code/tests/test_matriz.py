@@ -1,4 +1,4 @@
-from matriz import create_array, string, clean_array, color_pixel, ver_pixel, hor_pixel, block_pixel, save_array
+from matriz import create_array, string, clean_array, color_pixel, ver_pixel, hor_pixel, block_pixel, save_array, fill_pixel
 from unittest.mock import patch
 import io
 
@@ -79,6 +79,20 @@ def test_block(board):
         OWWO
         OWWO
         OWWO
+        OOOO'''
+    )
+
+
+def test_fill(board):
+    for n in range(1, 5):
+        color_pixel(f'{n} {n} X'.split(), board)
+    board = fill_pixel('3 2 +'.split(), board)
+    assert string(board) == dedent(
+        '''\
+        X+++
+        OX++
+        OOX+
+        OOOX
         OOOO'''
     )
 
