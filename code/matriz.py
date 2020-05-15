@@ -64,17 +64,11 @@ def hor_pixel(cmd, board):
 
 def block_pixel(cmd, board):
     """Change color of an entire block - 'K' Command."""
-    # TODO: Melhorar nome block_pixel
-    # TODO: Expandir o cmd em parâmetros que devem ser recebidos já nos tipos corretos.
-    # TODO: Uniformizar os parâmetros com o vertical_line e horizontal_line.
+    col_start, row_start, col_end, row_end, color = int(cmd[0]), int(cmd[1]), int(cmd[2]), int(cmd[3]), cmd[4]
 
-    # TODO: Alinhar os nomes dos parâmetros como na função range.
-    colIni, lineIni, colEnd, lineEnd, color = cmd
-
-    # TODO: Simplificar esse código com as abstrações de Coordenada, Region e Board.
-    for hor in range(int(colIni) - 1, int(colEnd)):
-        for ver in range(int(lineIni) - 1, int(lineEnd)):
-            board[int(ver)][int(hor)] = color
+    for col in range(col_start, col_end + 1):
+        for row in range(row_start, row_end+1):
+            set_item(board, (col, row), color)
     return board
 
 
