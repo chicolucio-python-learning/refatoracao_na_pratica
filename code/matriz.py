@@ -23,6 +23,12 @@ def set_item(board, coord, value):
     board[y(coord)-1][x(coord)-1] = value
 
 
+def region(col_start, row_start, col_end, row_end):
+    for row in range(row_start, row_end + 1):
+        for col in range(col_start, col_end + 1):
+            yield col, row
+
+
 def create_array(cmd, value=BLANK):
     """Create a array - 'I' Command."""
     col, row = int(cmd[0]), int(cmd[1])  # TODO
@@ -31,9 +37,8 @@ def create_array(cmd, value=BLANK):
 
 def clean_array(board, value=BLANK):
     """Clean a array - 'C' Command."""
-    for row in range(1, height(board) + 1):
-        for col in range(1, width(board) + 1):
-            set_item(board, (col, row), value)
+    for coord in region(1, 1, width(board), height(board)):
+        set_item(board, coord, value)
     return board
 
 
@@ -48,8 +53,8 @@ def ver_pixel(cmd, board):
     """Change the color of a column - 'V' Command."""
     col, row_start, row_end, color = int(cmd[0]), int(cmd[1]), int(cmd[2]), cmd[3]
 
-    for row in range(row_start, row_end + 1):
-        set_item(board, (col, row), color)
+    for coord in region(col, row_start, col, row_end):
+        set_item(board, coord, color)
     return board
 
 
@@ -57,8 +62,8 @@ def hor_pixel(cmd, board):
     """Change the color of a line - 'H' Command."""
     col_start, col_end, row, color = int(cmd[0]), int(cmd[1]), int(cmd[2]), cmd[3]
 
-    for col in range(col_start, col_end + 1):
-        set_item(board, (col, row), color)
+    for coord in region(col_start, row, col_end, row):
+        set_item(board, coord, color)
     return board
 
 
@@ -66,9 +71,8 @@ def block_pixel(cmd, board):
     """Change color of an entire block - 'K' Command."""
     col_start, row_start, col_end, row_end, color = int(cmd[0]), int(cmd[1]), int(cmd[2]), int(cmd[3]), cmd[4]
 
-    for col in range(col_start, col_end + 1):
-        for row in range(row_start, row_end+1):
-            set_item(board, (col, row), color)
+    for coord in region(col_start, row_start, col_end, row_end):
+        set_item(board, coord, color)
     return board
 
 
