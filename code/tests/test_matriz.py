@@ -1,4 +1,4 @@
-from matriz import create_array, string, clean_array, color_pixel, ver_pixel, hor_pixel
+from matriz import create_array, string, clean_array, color_pixel, ver_pixel, hor_pixel, block_pixel
 from textwrap import dedent
 import pytest
 
@@ -64,5 +64,17 @@ def test_horizontal(board):
         OOOO
         OWWO
         OOOO
+        OOOO'''
+    )
+
+
+def test_block(board):
+    board = block_pixel('2 2 3 4 W'.split(), board)
+    assert string(board) == dedent(
+        '''\
+        OOOO
+        OWWO
+        OWWO
+        OWWO
         OOOO'''
     )
