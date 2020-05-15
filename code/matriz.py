@@ -175,13 +175,6 @@ def string(board):
     return '\n'.join((''.join(row) for row in board))
 
 
-def print_board(board):
-    """Print the Board."""
-    print("\n")
-    print(string(board))
-    print("\n")
-
-
 def main():
     # TODO: Substituir o uso do if/elif por um mapeament com dicionário.
     # TODO: Encapsular os detalhes do comando sem vazar para o main.
@@ -225,8 +218,7 @@ def main():
                 # TODO: Remover quando a validação do comando for encapsulada no read_sequence.
                 continue
 
-            # TODO: Extrair o print do print_board.
-            print_board(board)
+            print(string(board))
 
         except:
             # TODO: Especificar as exception que serão tratadas.
