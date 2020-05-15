@@ -20,7 +20,7 @@ def y(coord):
 
 
 def set_item(board, coord, value):
-    board[y(coord)][x(coord)] = value
+    board[y(coord)-1][x(coord)-1] = value
 
 
 def create_array(cmd, value=BLANK):
@@ -31,22 +31,16 @@ def create_array(cmd, value=BLANK):
 
 def clean_array(board, value=BLANK):
     """Clean a array - 'C' Command."""
-    for row in range(height(board)):
-        for col in range(width(board)):
+    for row in range(1, height(board) + 1):
+        for col in range(1, width(board) + 1):
             set_item(board, (col, row), value)
     return board
 
 
 def color_pixel(cmd, board):
-    # TODO: Expandir o cmd em parâmetros.
-    # TODO: Receber os parâmetros já no tipo correto.
-    # TODO: Verificar se faz sentido implementar um objeto Coordenada/Cell/etc que encapsule a conversão de índices dos
-    #       comandos em índices do board: board[Coord(1, 2)] = color -> __set_item__
-    # TODO: Renomear colos_pixel para color.
     """Change the color of one pixel - 'L' Command."""
-    col, line, color = cmd
-
-    board[int(line) - 1][int(col) - 1] = color
+    coord, color = (int(cmd[0]), int(cmd[1])), cmd[2]
+    set_item(board, coord, color)
     return board
 
 
