@@ -1,4 +1,4 @@
-from matriz import create_array, string, clean_array, color_pixel
+from matriz import create_array, string, clean_array, color_pixel, ver_pixel
 from textwrap import dedent
 import pytest
 
@@ -40,5 +40,17 @@ def test_pixel(board):
         OWOO
         OOOO
         OOOO
+        OOOO'''
+    )
+
+
+def test_vertical(board):
+    board = ver_pixel('2 2 4 W'.split(), board)
+    assert string(board) == dedent(
+        '''\
+        OOOO
+        OWOO
+        OWOO
+        OWOO
         OOOO'''
     )
