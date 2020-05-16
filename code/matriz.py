@@ -51,6 +51,19 @@ def contains(board, coord):
     return 1 <= x(coord) <= width(board) and 1 <= y(coord) <= height(board)
 
 
+def flood(coord, inside, key, strategy=((-1, 0), (1, 0), (0, -1), (0, 1))):
+    if not inside(coord):
+        return
+
+    yield coord
+
+    neighbor = (offset(coord, rel) for rel in strategy)  # generator expression
+
+    for n in neighbor:
+        if inside(n) and key(n):
+            yield from flood(n, inside, key)
+
+
 def create_array(cmd, value=BLANK):
     """Create a array - 'I' Command."""
     col, row = int(cmd[0]), int(cmd[1])  # TODO
@@ -93,20 +106,6 @@ def block_pixel(cmd, board):
 
     set_many(board, region(col_start, row_start, col_end, row_end), color)
     return board
-
-
-def flood(coord, inside, key):
-    if not inside(coord):
-        return
-
-    yield coord
-
-    surroundings = (-1, 0), (1, 0), (0, -1), (0, 1)
-    neighbor = (offset(coord, rel) for rel in surroundings)  # generator expression
-
-    for n in neighbor:
-        if inside(n) and key(n):
-            yield from flood(n, inside, key)
 
 
 def fill_pixel(cmd, board):
