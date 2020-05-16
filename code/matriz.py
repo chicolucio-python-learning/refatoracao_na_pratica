@@ -95,27 +95,35 @@ def block_pixel(cmd, board):
     return board
 
 
+def flood(coord, inside, key):
+    if not inside(coord):
+        return
+
+    yield coord
+
+    surroundings = (-1, 0), (1, 0), (0, -1), (0, 1)
+    neighbor = (offset(coord, rel) for rel in surroundings)  # generator expression
+
+    for n in neighbor:
+        if inside(n) and key(n):
+            yield from flood(n, inside, key)
+
+
 def fill_pixel(cmd, board):
     """Fill a continuous region 'F' command."""
 
     # col, row, new_color = int(cmd[0]), int(cmd[1]), cmd[2]
     coord, new_color = (int(cmd[0]), int(cmd[1])), cmd[2]
     # coord = col, row
-
     old_color = get_item(board, coord)
 
-    if not contains(board, coord):
-        return board
+    def bound(coord):
+        return contains(board, coord)
 
-    set_item(board, coord, new_color)
+    def same_color(neighbor):
+        return get_item(board, neighbor) == old_color
 
-    surroundings = (-1, 0), (1, 0), (0, -1), (0, 1)
-    neighbor = (offset(coord, rel) for rel in surroundings)  # generator expression
-
-    for n in neighbor:
-        if contains(board, n):
-            if get_item(board, n) == old_color:
-                fill_pixel(list(n)+[new_color], board)
+    set_many(board, flood(coord, inside=bound, key=same_color), new_color)
 
     return board
 
