@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 from collections import deque
+import sys
 BLANK = "O"
 
 
@@ -79,45 +80,40 @@ def flood(original, inside, key, strategy=((-1, 0), (1, 0), (0, -1), (0, 1))):
                 pending.append(n)
 
 
-def create_array(w, h, value=BLANK):
+def create_array(board, w, h, value=BLANK):
     """Create a array - 'I' Command."""
-    return [[value] * w for _ in range(h)]
+    board[:] = [[value] * w for _ in range(h)]
 
 
 def clean_array(board, value=BLANK):
     """Clean a array - 'C' Command."""
     set_many(board, coords_of(board), value)
-    return board
 
 
-def color_pixel(board, coord, color):
+def color_pixel(board, col, row, color):
     """Change the color of one pixel - 'L' Command."""
+    coord = (col, row)
     set_item(board, coord, color)
-    return board
 
 
 def ver_pixel(board, col, row_start, row_end, color):
     """Change the color of a column - 'V' Command."""
     set_many(board, region(col, row_start, col, row_end), color)
 
-    return board
-
 
 def hor_pixel(board, col_start, col_end, row, color):
     """Change the color of a line - 'H' Command."""
     set_many(board, region(col_start, row, col_end, row), color)
-    return board
 
 
 def block_pixel(board, col_start, row_start, col_end, row_end, color):
     """Change color of an entire block - 'K' Command."""
     set_many(board, region(col_start, row_start, col_end, row_end), color)
-    return board
 
 
-def fill_pixel(board, coord, new_color):
+def fill_pixel(board, col, row, new_color):
     """Fill a continuous region 'F' command."""
-
+    coord = (col, row)
     old_color = get_item(board, coord)
 
     def bound(coord):
@@ -128,91 +124,76 @@ def fill_pixel(board, coord, new_color):
 
     set_many(board, flood(coord, inside=bound, key=same_color), new_color)
 
-    return board
 
-
-def save_array(filename, board):
+def save_array(board, filename):
     """Save the array with the 'S' command."""
     with open(filename, "w") as f:
         f.write("".join(string(board)))
 
 
-def read_sequence():
-    """Read and validate a sequence of commands."""
-    # TODO: Melhorar o nome read_sequence, pois na verdade ela lê o comando.
-    # TODO: Separar as responsabilidades do read_sequence para garantir a leitura de um comando válido e
-    #       validar o comando em si.
-    # TODO: Verificar se faz sentido ter um parser único para o comando validado, eliminando List[str] e usando algo
-    #       de mais alto nível.
+def prompt(convert):
+    while True:
+        value = input('> ')
+        value = value.strip()
 
-    # TODO: Melhorar o nome charValid para algo mais semântico.
-    # TODO: Remover os parêntesis desnecessários.
-    charValid = ("ICLVHKFSX")
-    # TODO: Melhorar o nome sqc. Sugestão: cmd
-    # TODO: Separar a obtenção do comando, do tratamento do comando.
-    sqc = input("Digite um comando: ").upper()
-    sqc = sqc.split()
+        try:
+            value = convert(value)
+        except ValueError as e:
+            print(e)
+        else:
+            break
 
-    for char in charValid:
-        # TODO: Verificar a real necessidade desse "and".
-        if char == sqc[0] and not "":
-            return sqc
-    else:
-        print("\nComando Inválido!\n")
-        return sqc
-    # TODO: Implementar um único return.
+    return value
+
+
+def parse(text, options='ICLVHKFSX'):
+    """Parse and validate a command string"""
+    tokens = text.upper().split()
+
+    if not tokens or tokens[0] not in options:
+        raise ValueError('Comando inválido')
+
+    for i, t in enumerate(tokens):
+        if t.isdigit():
+            tokens[i] = int(t)
+
+    return tokens
 
 
 def string(board):
     return '\n'.join((''.join(row) for row in board))
 
 
+def invoke(board, tokens):
+    commands = {
+        'X': sys.exit,
+        'I': create_array,
+        'L': color_pixel,
+        'V': ver_pixel,
+        'H': hor_pixel,
+        'K': block_pixel,
+        'F': fill_pixel,
+        'S': save_array,
+        'C': clean_array,
+    }
+
+    cmd, *args = tokens
+    f = commands[cmd]
+    f(board, *args)
+
+
 def main():
-    # TODO: Substituir o uso do if/elif por um mapeament com dicionário.
-    # TODO: Encapsular os detalhes do comando sem vazar para o main.
-    # TODO: Extrair a definição do board para o início do processamento.
-    # TODO: Verificar a possibilidade do board ser uma instância de uma classe.
+    board = []
     while True:
         try:
-            cmd = read_sequence()
-
-            if cmd[0] == "X":
-                break
-
-            elif cmd[0] == "I":
-                board = create_array(int(cmd[0]), int(cmd[1]))
-
-            elif cmd[0] == "L":
-                board = color_pixel(board, (int(cmd[0]), int(cmd[1])), cmd[2])
-
-            elif cmd[0] == "V":
-                board = ver_pixel(board, int(cmd[0]), int(cmd[1]), int(cmd[2]), cmd[3])
-
-            elif cmd[0] == "H":
-                board = hor_pixel(board, int(cmd[0]), int(cmd[1]), int(cmd[2]), cmd[3])
-
-            elif cmd[0] == "K":
-                board = block_pixel(board, int(cmd[0]), int(cmd[1]), int(cmd[2]), int(cmd[3]), cmd[4])
-
-            elif cmd[0] == "F":
-                board = fill_pixel(board, (int(cmd[0]), int(cmd[1])), cmd[2])
-
-            elif cmd[0] == "S":
-                save_array(cmd[1], board)
-
-            elif cmd[0] == "C":
-                board = clean_array(board)
-
-            else:
-                # TODO: Remover quando a validação do comando for encapsulada no read_sequence.
-                continue
-
             print(string(board))
+            cmd = prompt(parse)
+            invoke(board, cmd)
+        except TypeError:
+            print('Argumentos inválidos')
 
-        except:
-            # TODO: Especificar as exception que serão tratadas.
-            # TODO: Verificar como isolar a validação do comando no read_sequence.
-            print("\nComando inválido!\n")
+        except KeyboardInterrupt:
+            break
 
 
 if __name__ == '__main__':
