@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-
+from collections import deque
 BLANK = "O"
 
 
@@ -51,17 +51,32 @@ def contains(board, coord):
     return 1 <= x(coord) <= width(board) and 1 <= y(coord) <= height(board)
 
 
-def flood(coord, inside, key, strategy=((-1, 0), (1, 0), (0, -1), (0, 1))):
-    if not inside(coord):
-        return
+# def flood(coord, inside, key, strategy=((-1, 0), (1, 0), (0, -1), (0, 1))):
+#     if not inside(coord):
+#         return
 
-    yield coord
+#     yield coord
 
-    neighbor = (offset(coord, rel) for rel in strategy)  # generator expression
+#     neighbor = (offset(coord, rel) for rel in strategy)  # generator expression
 
-    for n in neighbor:
-        if inside(n) and key(n):
-            yield from flood(n, inside, key)
+#     for n in neighbor:
+#         if inside(n) and key(n):
+#             yield from flood(n, inside, key)
+
+def flood(original, inside, key, strategy=((-1, 0), (1, 0), (0, -1), (0, 1))):
+    visited = set()
+    pending = deque((original,))
+
+    while pending:
+        coord = pending.pop()
+        visited.add(coord)
+        yield coord
+
+        neighbors = (offset(coord, rel) for rel in strategy)
+
+        for n in neighbors:
+            if (n not in visited and inside(n) and key(n)):
+                pending.append(n)
 
 
 def create_array(cmd, value=BLANK):
