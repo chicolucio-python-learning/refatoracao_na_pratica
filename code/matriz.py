@@ -19,8 +19,16 @@ def y(coord):
     return coord[1]
 
 
+def offset(coord, rel):
+    return x(coord) + x(rel), y(coord) + y(rel)
+
+
 def set_item(board, coord, value):
     board[y(coord)-1][x(coord)-1] = value
+
+
+def get_item(board, coord):
+    return board[y(coord)-1][x(coord)-1]
 
 
 def set_many(board, coords, value):
@@ -36,6 +44,11 @@ def region(col_start, row_start, col_end, row_end):
     for row in range(row_start, row_end + 1):
         for col in range(col_start, col_end + 1):
             yield col, row
+
+
+def contains(board, coord):
+    """Check if a cmd is out of list range."""
+    return 1 <= x(coord) <= width(board) and 1 <= y(coord) <= height(board)
 
 
 def create_array(cmd, value=BLANK):
@@ -82,59 +95,27 @@ def block_pixel(cmd, board):
     return board
 
 
-def out_range(board, Y, X):
-    """Check if a cmd is out of list range."""
-    # TODO: Ajustar a ordem de argumentos para respeitar a lógica de um par ordenado.
-    # TODO: Melhorar o nome out_range, pois ele está muito atrelado ao detalhe de implementação com listas.
-    # TODO: Verificar se essa função não poderia ser substituida pelo método __contains__ -> Coord(x, y) in board
-    # TODO: Renomar para width e height.
-    line = len(board)
-    col = len(board[0])
-
-    # TODO: Retonar o resultado da expressão lógica.
-    # TODO: Utilizar comparações ricas. 0 <= X < width
-    # TODO: Alinhar a lógica do retorno com o nome da função.
-    if (X >= 0 and X < col) and (Y >= 0 and Y < line):
-        return True
-    else:
-        return False
-
-
 def fill_pixel(cmd, board):
     """Fill a continuous region 'F' command."""
-    # TODO: Melhorar o nome fill_pixel.
-    # TODO: Expandir cmd para os parâmetros já com os tipos corretos.
 
-    col, line, chgColor = cmd
+    # col, row, new_color = int(cmd[0]), int(cmd[1]), cmd[2]
+    coord, new_color = (int(cmd[0]), int(cmd[1])), cmd[2]
+    # coord = col, row
 
-    # TODO: Melhorar o nome da variável color para enfatizar que se trata de uma cor original/anterior.
-    # TODO: fill_pixel não deveria conhecer os detalhes de implementação do board.
-    color = board[line][col]
+    old_color = get_item(board, coord)
 
-    # TODO: Inverter a lógica para parar caso esteja fora.
-    if out_range(board, line, col):
-        # TODO: Melhorar o nome chgColor para algo mais descritivo.
-        board[line][col] = chgColor
+    if not contains(board, coord):
+        return board
 
-        # TODO: Trazer o teste da cor para junto do out_range com um and.
-        # TODO: Extrair a coordenada para variáveis auxiliares.
-        # TODO: Computar as coordenadas dos vizinhos antes e chamá-las em um loop.
-        # TODO: Encapsular o teste do vizinho em uma pequena função auxiliar. (?)
-        if out_range(board, line, col - 1):
-            if board[line][col - 1] == color:
-                fill_pixel([col - 1, line, chgColor], board)
+    set_item(board, coord, new_color)
 
-        if out_range(board, line, col + 1):
-            if board[line][col + 1] == color:
-                fill_pixel([col + 1, line, chgColor], board)
+    surroundings = (-1, 0), (1, 0), (0, -1), (0, 1)
+    neighbor = (offset(coord, rel) for rel in surroundings)  # generator expression
 
-        if out_range(board, line - 1, col):
-            if board[line - 1][col] == color:
-                fill_pixel([col, line - 1, chgColor], board)
-
-        if out_range(board, line + 1, col):
-            if board[line + 1][col] == color:
-                fill_pixel([col, line + 1, chgColor], board)
+    for n in neighbor:
+        if contains(board, n):
+            if get_item(board, n) == old_color:
+                fill_pixel(list(n)+[new_color], board)
 
     return board
 
@@ -203,9 +184,6 @@ def main():
                 board = block_pixel(cmd[1:6], board)
 
             elif cmd[0] == "F":
-                # TODO: Encapsular a conversão de índices do board.
-                cmd[1] = int(cmd[1]) - 1
-                cmd[2] = int(cmd[2]) - 1
                 board = fill_pixel(cmd[1:4], board)
 
             elif cmd[0] == "S":

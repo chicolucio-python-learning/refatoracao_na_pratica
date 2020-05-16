@@ -1,4 +1,5 @@
-from matriz import create_array, string, clean_array, color_pixel, ver_pixel, hor_pixel, block_pixel, save_array, fill_pixel
+from matriz import (create_array, string, clean_array, color_pixel, ver_pixel, hor_pixel,
+                    block_pixel, save_array, fill_pixel)
 from unittest.mock import patch
 import io
 
