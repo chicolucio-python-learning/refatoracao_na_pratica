@@ -37,6 +37,11 @@ def set_many(board, coords, value):
         set_item(board, c, value)
 
 
+def get_many(board, coords):
+    for c in coords:
+        yield get_item(board, c)
+
+
 def coords_of(board):
     yield from region(1, 1, width(board), height(board))
 
@@ -45,6 +50,11 @@ def region(col_start, row_start, col_end, row_end):
     for row in range(row_start, row_end + 1):
         for col in range(col_start, col_end + 1):
             yield col, row
+
+
+def items(board):
+    for coord in coords_of(board):
+        yield coord, get_item(board, coord)
 
 
 def contains(board, coord):
